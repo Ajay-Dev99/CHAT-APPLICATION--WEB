@@ -1,3 +1,10 @@
+const register = () => {
+    try {
+
+    } catch (error) {
+
+    }
+}
 const login = () => {
     try {
 
@@ -8,5 +15,6 @@ const login = () => {
 
 
 module.exports = {
-    login
+    login,
+    register
 }
