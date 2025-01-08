@@ -2,14 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   margin: 0;
-  padding:0;
+  padding: 0;
   box-sizing: border-box;
 }
-.homepage{
+
+
+.homepage {
   display: flex;
   flex-direction: column;
   background: yellow;
 }
 
+/* Hide scrollbar on all browsers */
+/*.hide-scrollbar {
+  scrollbar-width: none;  
+  -ms-overflow-style: none;  
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; 
+}*/
+
+.userlist {
+  overflow-y: scroll;
+}

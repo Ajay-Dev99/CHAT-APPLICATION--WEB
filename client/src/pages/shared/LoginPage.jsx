@@ -36,7 +36,7 @@ function LoginPage() {
                             </label>
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary" onClick={() => navigate('/chatapp')}>Login</button>
+                            <button className="btn btn-primary" onClick={() => navigate('/chat')}>Login</button>
                         </div>
                         <p className='text-center'>Don't Have An Account?<Link to={'/register'} className='text-blue-600 underline'>Register</Link></p>
                     </form>
