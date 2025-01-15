@@ -1,7 +1,8 @@
+const { register, login } = require('../../controllers/userControllers')
+
 const userRoutes = require('express').Router()
 
-userRoutes.post('/login', (req, res) => {
-    res.json('user api hitted')
-})
+userRoutes.post('/register', register)
+userRoutes.post('/login', login)
 
 module.exports = userRoutes
