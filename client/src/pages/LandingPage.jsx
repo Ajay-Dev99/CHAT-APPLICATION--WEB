@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { IoIosVideocam, IoIosClock } from "react-icons/io";
 import { MdOutlineSignalWifi4BarLock } from "react-icons/md";
 import { useNavigate } from 'react-router';
+import useApi from '../hooks/useApi';
 
 function Banner() {
     const navigate = useNavigate()
