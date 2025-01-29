@@ -13,11 +13,11 @@ export default function Themes() {
     return (
         <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}
-            <input type="checkbox" className="theme-controller" value="synthwave" onChange={handleTheme} />
+            <input type="checkbox" className="theme-controller tooltip tooltip-bottom " data-tip='theme' value="synthwave" onChange={handleTheme} />
 
             {/* sun icon */}
             <svg
-                className="swap-off h-7 w-7 fill-current"
+                className="swap-off h-7 w-7 fill-current "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24">
                 <path

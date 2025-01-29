@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import User from './User'
+import { userListingApi } from '../../services/userApi';
 
 function MessageList() {
+    const [users, setUsers] = useState([])
+    const listUsers = async () => {
+        try {
+            const { data } = await userListingApi()
+            console.log(data, "usersList");
+            setUsers(data)
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+    useEffect(() => {
+        listUsers()
+    }, [])
     return (
         <div className='text-center   my-2 flex-grow  overflow-x-auto'>
             <label className="input input-bordered border-[#fb8e0b] flex items-center gap-2 sticky top-0">
@@ -17,7 +33,14 @@ function MessageList() {
                         clipRule="evenodd" />
                 </svg>
             </label>
-            <User />
+            <div className='users'>
+
+                {
+                    users.map((user) => (
+                        <User user={user} />
+                    ))
+                }
+            </div>
         </div>
     )
 }

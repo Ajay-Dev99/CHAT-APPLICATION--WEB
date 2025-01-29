@@ -3,6 +3,8 @@ const createToken = require("../utilities/generateToken");
 
 const register = async (req, res) => {
     try {
+        console.log(req.body);
+
         const { name, email, password } = req.body
         if (!name || !email || !password) {
             return res.status(400).json({ error: 'All fields are required' })
@@ -16,7 +18,7 @@ const register = async (req, res) => {
         delete saved.password
 
         const token = createToken(saved._id)
-        res.cookie("token", token, { sameSite: "None", secure: true });
+        res.cookie("token", token);
 
         res.status(200).json({ message: 'user created succesfully', saved })
 
@@ -44,7 +46,7 @@ const register = async (req, res) => {
 }
 const login = async (req, res) => {
     const { email, password } = req.body;
-
+    console.log(req.body);
     try {
         if (!email || !password) {
             return res.status(400).json({ error: 'All fields are required' })
@@ -66,7 +68,9 @@ const login = async (req, res) => {
         // Create JWT token
         // const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
         const token = createToken(user._id)
-        res.cookie("token", token, { sameSite: "None", secure: true });
+        console.log(token, "token");
+
+        res.cookie("token", token);
         const userObject = user.toObject();
         delete userObject.password;
 
@@ -83,8 +87,46 @@ const login = async (req, res) => {
     }
 }
 
+const checkUser = (req, res) => {
+    try {
+        return res.status(200).json({ message: "user Autheticated" })
+    } catch (error) {
+        console.log(error);
+
+        return res.status(error.status || 500).json({ error: error.message || "Internal server error" })
+    }
+}
+
+const logout = (req, res) => {
+    try {
+        res.clearCookie("token");
+        return res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+        console.log(error);
+        return res.status(error.status || 500).json({ error: error.message || "Internal server error" });
+    }
+};
+
+
+const listUsers = async (req, res) => {
+    try {
+        const users = await userDb.find({ _id: { $ne: req.user.id } }, { password: 0 });
+        console.log(users, "users list");
+
+        res.status(200).json(users);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+
+
 
 module.exports = {
     login,
-    register
+    register,
+    checkUser,
+    logout,
+    listUsers
 }

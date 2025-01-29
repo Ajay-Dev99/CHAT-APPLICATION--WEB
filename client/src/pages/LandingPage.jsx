@@ -1,16 +1,16 @@
-import Aos from 'aos';
+
 import React, { useEffect } from 'react'
 import { IoIosVideocam, IoIosClock } from "react-icons/io";
 import { MdOutlineSignalWifi4BarLock } from "react-icons/md";
 import { useNavigate } from 'react-router';
-import useApi from '../hooks/useApi';
 
 function Banner() {
+
+
+
     const navigate = useNavigate()
 
-    useEffect(() => {
-        Aos.init()
-    }, [])
+
     return (
         <div className='flex flex-col gap-16 flex-1 container mx-auto px-8'>
             <section data-aos="fade-down" data-aos-duration='1000' className='flex flex-wrap h-screen  space-y-2'>

@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Outlet } from 'react-router'
 import UserList from '../pages/message/MessageList'
+import ChatHeader from '../components/ChatHeader'
 
 function ChatLayout() {
     return (
@@ -20,7 +20,7 @@ function ChatLayout() {
         <div className="flex flex-col h-screen ">
 
             <div className="fixed top-0 left-0 w-full z-10">
-                <Header />
+                <ChatHeader />
             </div>
 
             {/* Main Content (List of Users) */}

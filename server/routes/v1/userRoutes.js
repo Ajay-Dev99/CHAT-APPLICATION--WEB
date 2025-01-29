@@ -1,8 +1,14 @@
-const { register, login } = require('../../controllers/userControllers')
+const { register, login, checkUser, logout, listUsers } = require('../../controllers/userControllers')
+const authUser = require('../../middlewares/userAuth')
 
 const userRoutes = require('express').Router()
 
-userRoutes.post('/register', register)
+
+
+userRoutes.get('/check-user', authUser, checkUser)
+userRoutes.post('/user-register', register)
 userRoutes.post('/login', login)
+userRoutes.post('/user-logout', logout)
+userRoutes.get('/users-list', authUser, listUsers)
 
 module.exports = userRoutes

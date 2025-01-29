@@ -1,15 +1,12 @@
 import React, { Suspense, useEffect } from 'react'
 import UserList from './MessageList'
 import SendMessage from './SendMessage'
-import Aos from 'aos'
 import User from './User'
 import Loading from '../../components/Shared/Loading'
 
 function Chatpage() {
 
-    useEffect(() => {
-        Aos.init()
-    }, [])
+
     return (
         <div className='flex flex-col md:flex-row flex-grow container mx-auto px-3 gap-2 h-full '>
             <div className="hidden flex-1 md:flex flex-col w-full  md:w-1/4 " data-aos="fade-down" data-aos-duration='1000' >
