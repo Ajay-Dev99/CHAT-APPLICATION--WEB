@@ -9,7 +9,6 @@ function UserLayout() {
     const checkUser = async () => {
         try {
             const { data } = await userCheckUserApi()
-            console.log(data, "Response");
             if (data.message) {
                 navigate("/chat")
             }

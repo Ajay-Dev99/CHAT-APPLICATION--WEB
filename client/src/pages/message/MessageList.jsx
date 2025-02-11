@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import User from './User'
 import { userListingApi } from '../../services/userApi';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../redux/features/selectedChat/selectedUser';
 
-function MessageList() {
+function MessageList({ selectuser }) {
+    const dispatch = useDispatch()
     const [users, setUsers] = useState([])
     const listUsers = async () => {
         try {
             const { data } = await userListingApi()
-            console.log(data, "usersList");
             setUsers(data)
 
         } catch (error) {
@@ -18,6 +20,9 @@ function MessageList() {
     useEffect(() => {
         listUsers()
     }, [])
+
+
+
     return (
         <div className='text-center   my-2 flex-grow  overflow-x-auto'>
             <label className="input input-bordered border-[#fb8e0b] flex items-center gap-2 sticky top-0">
@@ -37,7 +42,9 @@ function MessageList() {
 
                 {
                     users.map((user) => (
-                        <User user={user} />
+                        <div key={user._id} className='hover:bg-base-200 cursor-pointer ' onClick={() => dispatch(addUser(user))}>
+                            <User user={user} />
+                        </div>
                     ))
                 }
             </div>

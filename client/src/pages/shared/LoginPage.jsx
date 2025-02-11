@@ -19,7 +19,6 @@ function LoginPage() {
             toast.success("Login successfull")
             navigate('/chat')
         } catch (error) {
-            console.log(error?.response?.data?.message, "error");
             toast.error(error.response.data.message)
 
         }

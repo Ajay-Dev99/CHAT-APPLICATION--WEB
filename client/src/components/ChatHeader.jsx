@@ -4,15 +4,21 @@ import { IoMdSettings, IoIosLogOut } from "react-icons/io";
 import { LuUserRoundCog } from "react-icons/lu";
 import { useNavigate } from 'react-router';
 import { userLogoutApi } from '../services/userApi';
+import { persistor } from '../redux/store';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../redux/features/selectedChat/selectedUser';
 
 function ChatHeader() {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const logout = async () => {
         try {
             const { data } = await userLogoutApi()
             if (data.message) {
+                dispatch(addUser({}))
+                persistor.purge()
                 navigate("/")
             }
         } catch (error) {

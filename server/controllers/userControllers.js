@@ -1,17 +1,20 @@
 const userDb = require("../model/userModel");
 const createToken = require("../utilities/generateToken");
+const uploadToCloudinary = require("../utilities/imageUpload");
 
 const register = async (req, res) => {
     try {
-        console.log(req.body);
 
         const { name, email, password } = req.body
-        if (!name || !email || !password) {
+
+        if (!name || !email || !password || !req.file) {
             return res.status(400).json({ error: 'All fields are required' })
         }
 
+        const imageUrl = await uploadToCloudinary(req.file.path)
+
         const newUser = new userDb({
-            name, email, password
+            name, email, password, profilepic: imageUrl
         })
 
         const saved = (await newUser.save()).toObject()
@@ -23,7 +26,6 @@ const register = async (req, res) => {
         res.status(200).json({ message: 'user created succesfully', saved })
 
     } catch (error) {
-        console.log(error);
 
         if (error.name === 'ValidationError') {
 
@@ -46,7 +48,6 @@ const register = async (req, res) => {
 }
 const login = async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
     try {
         if (!email || !password) {
             return res.status(400).json({ error: 'All fields are required' })
@@ -68,7 +69,6 @@ const login = async (req, res) => {
         // Create JWT token
         // const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
         const token = createToken(user._id)
-        console.log(token, "token");
 
         res.cookie("token", token);
         const userObject = user.toObject();
@@ -80,7 +80,7 @@ const login = async (req, res) => {
 
         });
     } catch (error) {
-        console.log(error);
+
 
         return res.status(error.status || 500).json({ error: error.message || "Internal server error" })
 
@@ -91,7 +91,6 @@ const checkUser = (req, res) => {
     try {
         return res.status(200).json({ message: "user Autheticated" })
     } catch (error) {
-        console.log(error);
 
         return res.status(error.status || 500).json({ error: error.message || "Internal server error" })
     }
@@ -102,7 +101,6 @@ const logout = (req, res) => {
         res.clearCookie("token");
         return res.status(200).json({ message: "Logout successful" });
     } catch (error) {
-        console.log(error);
         return res.status(error.status || 500).json({ error: error.message || "Internal server error" });
     }
 };
@@ -110,12 +108,11 @@ const logout = (req, res) => {
 
 const listUsers = async (req, res) => {
     try {
-        const users = await userDb.find({ _id: { $ne: req.user.id } }, { password: 0 });
-        console.log(users, "users list");
+
+        const users = await userDb.find({ _id: { $ne: req.user } }, { password: 0 });
 
         res.status(200).json(users);
     } catch (error) {
-        console.log(error);
         res.status(500).json({ error: "Internal server error" });
     }
 };

@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     },
     profilepic: {
         type: String,
-        default: 'https://static.vecteezy.com/system/resources/thumbnails/036/744/532/small_2x/user-profile-icon-symbol-template-free-vector.jpg'
+        required: true
     },
     role: {
         type: String,
